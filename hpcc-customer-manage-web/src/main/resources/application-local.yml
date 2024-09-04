@@ -1,0 +1,129 @@
+spring:
+  messages:
+    basename: i18n/messages #配置国际化资源文件路径
+    encoding: UTF-8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://10.240.193.177:3306/territory_person_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+#    username: territory_person_dev
+#    password: territory_person_dev#test193
+#    url: jdbc:mysql://10.240.193.159:3306/market_info_management?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+#    username: market_info_management
+#    password: mimProd#(&*O0
+    url: jdbc:mysql://10.240.193.177:3306/territory_person_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+    username: territory_person_dev
+    password: territory_person_dev#test193
+    hikari:
+      auto-commit: false
+      connection-timeout: 5000
+      maximum-pool-size: 15
+  application:
+    name: hpcc-customer-manage-v1-0-local
+  cloud:
+    nacos:
+      discovery:
+        #配置Nacos服务注册发现地址
+        heart-beat-interval: 1000
+        server-addr: localhost:8848
+        namespace: 97e796f4-f990-4448-a0f3-5b7a9d2df761
+        group: LCDS_GROUP
+#        username: shjh
+#        password: shjh(*^&oiu(*
+        ephemeral: true
+      config:
+        #配置Nacos注册中心地址
+        enabled: false
+        server-addr: localhost:8848
+#        username: shjh
+#        password: shjh(*^&oiu(*
+        file-extension: yaml
+        namespace: 97e796f4-f990-4448-a0f3-5b7a9d2df761
+        group: LCDS_GROUP
+
+
+  #reids配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: localhost
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    timeout: 30000
+
+# redis
+redisson:
+  single-server-config:
+    address: 127.0.0.1:6379
+    database: 0
+    connection-pool-size: 4
+    connection-minimum-idle-size: 1
+    subscription-connection-pool-size: 4
+  codec: com.gientech.lcds.data.auth.utils.JsonJacksonCodec
+#  password: hnhdrd@gientech.com
+
+logging:
+  level:
+    root: INFO
+    com.ejlchina.searcher.implement.DefaultSqlExecutor: DEBUG
+    com.uwdp.module.biz.infrastructure.mapper.LmcWorkflowMapper: DEBUG
+
+#lcds
+lcds:
+  workflow:
+    # 获取表单服务 流程表单是零代码开发时需要配置,即流程的表单在前端开发平台上做的开发(通过拖拉拽的方式,且出码后不做页面调整)
+    form-server:
+      server-type: spring_cloud
+      service-id: baseService
+      server-addr: http://lcds-workflow
+    # 获取用户数据服务
+    uac-server:
+      server-type: spring_cloud
+      service-id: idaas-core-service
+      server-addr: http://uwdp-lcds-idaas-core-api.dc-uwdp:8087
+    # 工作流相关操作服务（例如提交流程等）
+    work-flow-server:
+      server-type: spring_cloud
+      service-id: lcds-workflow
+      server-addr: http://lcds-workflow
+
+attachment:
+  upload-url: /data/application/file/
+  max-size: 100
+  min-size: 1
+common:
+  user-info-url: https://idaas-api-dev.htpc.com.cn/open/1/sso/userinfo
+
+
+# 关闭实体模型的权限校验
+data-auth:
+  enable: false
+
+hpcc-mim-server:
+  permisson-url: https://idaas-api-dev.htpc.com.cn/open/1/sso/permission/7b01ef0233f3499ea3dcd57dc2071315
+  appId: 1681853481029976065
+  tenantId: 1
+  sysCode: MimMsg
+  url: https://uwdp-api-dev.htpc.com.cn
+  oaUrl: https://oa.htpc.com.cn/rest/ofs/ReceiveRequestInfoByJson
+
+idaas:
+  sdk:
+#    server-address:
+    tenant-id: 1
+    client-id: 7b01ef0233f3499ea3dcd57dc2071315
+    client-secret: 8fdd65f9fb1f4451b219aa8840461ece
+
+################# 开启DEBUG日志 [begin] #################
+feign:
+  client:
+    config:
+      default:
+        logger-level: FULL
+  logging:
+    level:
+      com.gientech.ri.cpbb2.idaas.open.adapter.rest.client.tenant: DEBUG
+################# 开启DEBUG日志 [end] ###################

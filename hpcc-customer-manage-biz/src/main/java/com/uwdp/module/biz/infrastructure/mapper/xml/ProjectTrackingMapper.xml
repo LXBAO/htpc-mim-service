@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwdp.module.biz.infrastructure.mapper.ProjectTrackingMapper">
+
+    <select id="pageAll" resultType="com.uwdp.module.api.vo.dto.searcher.ProjectTrackingWorkflowDto" parameterType="Map">
+        select * FROM T_PROJECTTRACKING p
+        left join T_PROJECTRECORDS r on p.PROJECTNUMBER = r.ID left join T_LMCWORKFLOW l on p.ID =  l.BIZID
+        WHERE ( 1=1
+            <if test="trackItemName != null">
+                    and p.TRACKITEMNAME like concat('%',#{trackItemName},'%')
+            </if>
+            <if test="trackStartDate != null">
+                    and p.TRACKDATE &gt;= #{trackStartDate} and TRACKDATE &lt;= #{trackEndDate}
+            </if>
+            <if test="createdStartTime != null">
+                and p.CREATEDTIME &gt;= #{createdStartTime} and CREATEDTIME &lt;= #{createdEndTime}
+            </if>
+            <if test="industryChainCategory != null">
+                and p.INDUSTRYCHAINCATEGORY like concat(#{industryChainCategory},'%')
+            </if>
+            <if test="personName != null">
+                and p.PERSONNAME like concat('%',#{personName},'%')
+            </if>
+            <if test="projectMode != null">
+                and p.PROJECTMODE = #{projectMode}
+            </if>
+            <if test="isForien != null">
+                and r.ISFORIEN = #{isForien}
+            </if>
+            <if test="groupFullCode != null">
+                and p.GROUPFULLCODE like concat('%',#{groupFullCode},'%')
+            </if>
+            <if test="workflowStatus != null">
+                and l.WORKFLOWSTATUS = #{workflowStatus}
+            </if>
+            <if test="createdBy != null">
+                and p.CREATED_BY = #{createdBy}
+            </if>
+            <if test="projectNumber != null">
+                and p.PROJECTNUMBER = #{projectNumber}
+            </if>
+            <if test="groupFullCodeList != null and groupFullCodeList">
+                and
+                <foreach item="item" index="index" collection="groupFullCodeList"  open="(" separator="OR" close=")">
+                    p.GROUPFULLCODE like concat('%',#{item},'%')
+                </foreach>
+            </if>
+            )
+           <if test="userGroupFullCode != null">
+               OR (
+               p.IntAssistanceUnit like concat('%',#{userGroupFullCode},'%')
+               )
+           </if>
+           ORDER BY p.CREATED_TIME DESC
+        <if test="limit != null">
+            LIMIT #{startIndex},#{pageSize}
+        </if>
+    </select>
+</mapper>

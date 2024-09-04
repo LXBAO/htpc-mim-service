@@ -1,0 +1,132 @@
+spring:
+  messages:
+    basename: i18n/messages #配置国际化资源文件路径
+    encoding: UTF-8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://10.240.193.159:3306/market_info_management?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+#    username: market_info_management
+#    password: mimProd#(&*O0
+    url: jdbc:mysql://10.240.193.159:3306/market_info_management?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+    username: market_info_management
+    password: mimProd#(&*O0
+    hikari:
+      auto-commit: false
+      connection-timeout: 5000
+      maximum-pool-size: 15
+  application:
+    name: hpcc-customer-manage
+  cloud:
+    nacos:
+      discovery:
+        #配置Nacos服务注册发现地址
+        heart-beat-interval: 1000
+        server-addr: 10.240.193.159:8848
+        namespace: 97e796f4-f990-4448-a0f3-5b7a9d2df761
+        group: LCDS_GROUP
+        username: shjh
+        password: shjh(*^&oiu(*
+        ephemeral: true
+      config:
+        #配置Nacos注册中心地址
+        enabled: false
+        server-addr: 10.240.193.159:8848
+        username: shjh
+        password: shjh(*^&oiu(*
+        file-extension: yaml
+        namespace: 97e796f4-f990-4448-a0f3-5b7a9d2df761
+        group: LCDS_GROUP
+  #reids配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    cluster:
+      nodes: 10.240.193.141:7001,10.240.193.141:7002,10.240.193.142:7001,10.240.193.142:7002,10.240.193.143:7001,10.240.193.143:7002
+    # Redis服务器连接密码（默认为空）
+    password: hnhdrd@gientech.com
+    timeout: 30000
+  mvc:
+    async:
+      request-timeout: 20000
+
+
+# redis
+redisson:
+  model: CLUSTER
+  multiple-server-config:
+    master-name: hpcc-mim-manage
+    node-addresses:
+      - 10.240.193.141:7001
+      - 10.240.193.141:7002
+      - 10.240.193.142:7001
+      - 10.240.193.142:7002
+      - 10.240.193.143:7001
+      - 10.240.193.143:7002
+    read-mode: MASTER
+    subscription-mode: MASTER
+  codec: com.gientech.lcds.data.auth.utils.JsonJacksonCodec
+  password: hnhdrd@gientech.com
+
+logging:
+  level:
+    root: INFO
+    com.ejlchina.searcher.implement.DefaultSqlExecutor: DEBUG
+    com.uwdp.module.biz.infrastructure.mapper.LmcWorkflowMapper: DEBUG
+
+#lcds
+#lcds:
+#  workflow:
+#    # 获取表单服务 流程表单是零代码开发时需要配置,即流程的表单在前端开发平台上做的开发(通过拖拉拽的方式,且出码后不做页面调整)
+#    form-server:
+#      server-type: spring_cloud
+#      service-id: baseService
+#      server-addr: http://lcds-workflow
+#    # 获取用户数据服务
+#    uac-server:
+#      server-type: spring_cloud
+#      service-id: idaas-core-service
+#      server-addr: http://uwdp-lcds-idaas-core-api.dc-uwdp:8087
+#    # 工作流相关操作服务（例如提交流程等）
+#    work-flow-server:
+#      server-type: spring_cloud
+#      service-id: lcds-workflow
+#      server-addr: http://lcds-workflow
+lcds:
+  workflow:
+    client-id: acc49039d2df474d9a1f24a45e1ce8c2
+    open-api:
+      #      传输密钥设置
+      client-private-key: d0b982f1b7380c7367357399285ad4069fbaf2810833be42f67fd99f74bdd390
+        # 是否启用加密（根据该应用在流程引擎平台的配置）
+        #encrypt: true
+      # 是否启用签名（根据该应用在流程引擎平台的配置）
+      #sign: true
+      server-addr: http://uwdp-lcds-workflow-open-api.dc-uwdp:8890/ # open服务地址
+      # 工作流开放平台公钥（默认为： 035ba4be24a9d075b33b1c2ca40de228e94a7a6e539f112f9243710de74064b2bf）
+      server-public-key: 0233dcd9319068b43d9aafc3076a838fa6993eea2b98942db7b6d17a307418f856
+common:
+  user-info-url: https://idaas-api.htpc.com.cn/open/1/sso/userinfo
+
+
+# 关闭实体模型的权限校验
+data-auth:
+  enable: false
+
+
+hpcc-mim-server:
+  permisson-url: https://idaas-api.htpc.com.cn/open/1/sso/permission/acc49039d2df474d9a1f24a45e1ce8c2
+  app-id: 1658290286455627778
+  appId: 1658290286455627778
+  tenantId: 1
+  sysCode: MimMsg
+  url: https://mim.htpc.com.cn
+  oaUrl: https://oa.htpc.com.cn/rest/ofs/ReceiveRequestInfoByJson
+
+idaas:
+  sdk:
+    #    server-address:
+    tenant-id: 1
+    client-id: acc49039d2df474d9a1f24a45e1ce8c2
+    client-secret: fa8bb56f6c3b462c857d1e09e5c8b2b3

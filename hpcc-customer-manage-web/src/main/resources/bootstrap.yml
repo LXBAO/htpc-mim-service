@@ -1,0 +1,62 @@
+server:
+lcds:
+  config:
+    auth:
+      enable: true
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      # 根据实际需求作调整
+      # 默认最大上传文件大小为10M，单个文件大小
+      max-file-size: 50MB
+      # 默认最大请求大小为15M，总上传的数据大小
+      max-request-size: 100MB
+      enabled: true
+file:
+  dir : /data/
+qichacha:
+  appKey: cc211a5379fd480db25b35a51d7e3130
+  secretKey: B9C6FDE75ECAD42A5370FB6FBF120768
+  nameSearchUrl: https://api.qichacha.com/NameSearch/GetList
+  fuzzySearchUrl: https://api.qichacha.com/FuzzySearch/GetList
+qiyeweixin:
+  appid: wweca056d6ee884d59
+  agentId: 1000070
+  secret: DUySHK96JussEGQMbti1kD95lpn5s_VTgxXUCP6tKVs
+  access-token-url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  user-info-url: https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo
+  getuserdetailUrl: https://qyapi.weixin.qq.com/cgi-bin/auth/getuserdetail
+  sendUrl: https://qyapi.weixin.qq.com/cgi-bin/message/send
+  getuseridUrl: https://qyapi.weixin.qq.com/cgi-bin/user/getuserid
+
+mybatis-plus:
+  # ?? mapper.xml
+  mapper-locations: classpath*:com/uwdp/module/**/infrastructure/mapper/xml/*.xml,classpath*:com/gientech/lcds/**/infrastructure/mapper/xml/*.xml
+  configuration:
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+  global-config:
+    enable-sql-runner: true
+# bean-searcher
+bean-searcher:
+  params:
+    pagination:
+      page: pageIndex
+      size: pageSize
+      start: 1
+      max-allowed-size: 2000
+knife4j:
+  enable: true
+attachment:
+  upload-url: /data/application/file/
+  max-size: 100
+  min-size: 1
+#common:
+#  user-info-url: https://idaas-api.htpc.com.cn/open/1/sso/userinfo
+#  测试地址
+#  user-info-url: https://idaas-api-dev.htpc.com.cn/open/1/sso/userinfo
+hpcc-mim-server:
+  permisson-url: https://idaas-api.htpc.com.cn/open/1/sso/permission/{clientId}

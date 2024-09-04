@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uwdp.module.biz.infrastructure.mapper.SysOperateLogMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.uwdp.module.biz.infrastructure.entity.SysOperateLogDo" id="sysOperateLogMap">
+        <result property="id" column="id"/>
+        <result property="operateLogCode" column="operate_log_code"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="operateType" column="operate_type"/>
+        <result property="userNo" column="user_no"/>
+        <result property="clientIp" column="client_ip"/>
+        <result property="clientInfo" column="client_info"/>
+        <result property="requestUrl" column="request_url"/>
+        <result property="requestMethod" column="request_method"/>
+        <result property="operateMethod" column="operate_method"/>
+        <result property="requestParam" column="request_param"/>
+        <result property="operateStatus" column="operate_status"/>
+        <result property="logExtra" column="log_extra"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="appId" column="app_id"/>
+        <result property="business" column="business"/>
+        <result property="businessDetail" column="business_detail"/>
+    </resultMap>
+
+
+</mapper>
